@@ -1,38 +1,160 @@
-.App {
+/*  */
+
+
+body{
+  scroll-behavior: smooth;
+}
+.wrapper{
+  height: 100vh;
+  width: 100%;
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%); */
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.circle-wrapper{
   display: flex;
+  margin: auto;
   flex-direction: column;
+  height: fit-content;
+  width: 800px;
+  border-bottom: 1px solid grey;
+}
+.circles-to-color{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+  width: 30%;
+  margin: auto;
+}
+.circles-to-color button{
+  border-radius: 3px;
+  padding: 4px;
+  outline: none;
+  border: 1px solid black;
+}
+.turn-no{
+  font-size: 20px;
+}
+.circles-to-check{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 30px;
+  width: 30%;
+  margin: auto;
+}
+.circle{
+  height: 20px;
+  width: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+}
+.circle-small{
+  height: 10px;
+  width: 10px;
+  border: 1px solid black;
+  border-radius: 50%;
+  margin: 0px 10px;
+}
+.color-chooser{
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 30%;
+  margin: 2rem auto;
+  background-color: rgb(252, 222, 218);
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 8px  gray;
+  padding-left: 35px;
+}
+.color-box button{
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 20px;
+  background-color: rgb(252, 210, 205);
+  box-shadow: 0px 0px 4px grey;
 }
 
-.App-link {
-  color: #61dafb;
+.play-box{
+  margin-top: 4rem;
+  height: fit-content;
+}
+.hide{
+  visibility: hidden;;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.game-rule-box{
+  width: 80%;
+  margin: auto;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items:flex-start;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 20px;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+}
+.paragraphs{
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 20px; 
+}
+.paragraphs:nth-child(5){
+  background-color: rgb(119, 70, 70);
+}
+#rules{
+  background-color: rgb(119, 70, 70);
+}
+.header-text {
+  font-weight: 400;
+  color: rgb(126, 33, 33);
+}
+
+.sticky-text{
+  position: sticky;
+  top:0;
+  text-align: right;
+  margin: 4px;
+  padding-top: 10px;
+  cursor: pointer;
+  font-style: italic;
+}
+@media only screen and (max-width:919px){
+  .circle-wrapper{
+    width: 500px;
   }
-  to {
-    transform: rotate(360deg);
+  .circles-to-color{
+    width: 50%;
+  }
+  .circles-to-check{
+    width: 50%;
+  }
+}
+@media only screen and (max-width:622px){
+  .circle-wrapper{
+    width: 300px;
+  }
+  .circles-to-color{
+    width: 65%;
+  }
+  .circles-to-check{
+    width: 65%;
+  }
+  #rules{
+    font-size: 15px;
+    text-align: left;
+  }
+  #rules li {
+    margin: 10px 4px;
   }
 }

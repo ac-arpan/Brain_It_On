@@ -1,3 +1,7 @@
+## It is a simple game about finding the Exact Pattern of Colors selected by computer within limited turns. This is made in React
+
+Play the game here : http://brain-it-on-by-ac-arpan.netlify.app/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
