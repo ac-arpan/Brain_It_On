@@ -74,10 +74,10 @@ function Game() {
 
   useEffect(() => {
     // console.log(`Index: ${index}`)
-    if (index === 6) {
+    if (index === 11 && !win) {
       toast.warn("Last chance! All the best!", { position: toast.POSITION.TOP_RIGHT })
     }
-    if (index > 6) {
+    if (index > 11) {
       // console.log('I am in')
       showModal()
     }
@@ -102,6 +102,23 @@ function Game() {
 
   }
 
+  //This utility function shuffles a list given to it
+
+  const shuffle = (list) => {
+    let newList = list.sort(() => 0.5 - Math.random())
+    // console.log(list);
+
+    return newList
+  }
+  // const shuffle = (list) => {
+  //   let j = 0
+  //   for(let i = list.length - 1; i > 0; i--) {
+  //     j = Math.floor(Math.random() * ( i + 1))
+  //     [ list[i], list[j] ] = [ list[j], list[i] ]
+  //   }
+  //   return list
+  // }
+
   // This is a utility function which show a modal when use ran out of chances or won
   const showModal = () => {
     setModalIsOpen(true)
@@ -118,7 +135,7 @@ function Game() {
       flag = true
     }
     else {
-      console.log('not all colored');
+      // console.log('not all colored');
       toast.error("Please fill all the circle before checking!", { position: toast.POSITION.TOP_RIGHT, autoClose: 2100 })
 
     }
@@ -131,13 +148,25 @@ function Game() {
       const pickedColorsOfUser = [userColors.firstColor, userColors.secondColor, userColors.thirdColor, userColors.fourthColor]
       const pickedColorsOfComputer = [computerColors.firstColor, computerColors.secondColor, computerColors.thirdColor, computerColors.fourthColor]
 
+      let resultColorList = []
       pickedColorsOfUser.forEach((color, index) => {
         if (pickedColorsOfComputer.includes(color)) {
-          currentColorCheckCircles.children[index].style.background = 'black'
+          // currentColorCheckCircles.children[index].style.background = 'black'
+          resultColorList[index] = 'black'
           if (color === pickedColorsOfComputer[index]) {
-            currentColorCheckCircles.children[index].style.background = 'violet'
+            // currentColorCheckCircles.children[index].style.background = 'violet'
+            resultColorList[index] = 'violet'
           }
         }
+        else {
+          resultColorList[index] = 'white'
+        }
+      })
+      resultColorList = shuffle(resultColorList)
+      // console.log(resultColorList);
+
+      resultColorList.forEach((color, index) => {
+        currentColorCheckCircles.children[index].style.background = color
       })
 
 
@@ -160,8 +189,12 @@ function Game() {
       setIndex(prevIndex => prevIndex + 1)
 
 
+      // console.log(pickedColorsOfComputer);
+      // console.log(pickedColorsOfUser);
+      // console.log('Unshuffled', resultColorList);
+      // console.log(shuffle(resultColorList));
 
-
+      resultColorList = []
       createNextRound()
 
     }
@@ -236,20 +269,29 @@ function Game() {
                 width: '70%',
                 display: 'block',
                 margin: '10px auto',
-                height: '62vh',
+                height: '70vh',
                 textAlign: 'center'
               }
             }
           }>
-          <div id="rules"className="paragraphs" style={{color:'yellow'}}>
-                    <p style={{textAlign:'center'}}>Understanding the hints!</p>
-                    <ul>
-                        <li>If you choose a color for a cirlce and the color is present in the list of 4 colors, the computer has picked, then the respective 'check circle' will be colored 'black'.</li>
-                        <li>If you choose a color for a cirlce and the computer has also picked the same color for the same circle, then the respective 'check circle' will be colored 'violet'.</li>
-                        <li>If you choose a color for a circle and the color is not at all present in the list of 4 colors, the computer has picked, then the respective 'check circle' will be kept 'white'.</li>
-                    </ul>
+          <div id="rules" className="paragraphs" style={{ color: 'yellow',textAlign:'left' }}>
+            <p style={{ textAlign: 'center' }}>Understanding the hints!</p>
+            <ul>
+              <li>If you choose a color for a cirlce and the color is present in the list of 4 colors, the computer has picked,<em>any one of the 'check circles' </em> will be colored 'black'.</li><br />
+              <li>If you choose a color for a cirlce and the computer has also picked the same color for the same circle, then<em> any one of the 'check circles' </em> will be colored 'violet'.</li><br />
+              <li>If you choose a color for a circle and the color is not at all present in the list of 4 colors, the computer has picked, <em>any of the 'check circles'</em> will be kept 'white'.</li><br />
+
+                        Ex : Computer Picked : (red, blue, red, green) <br />
+              <ul>
+                <li>If you pick (red, green, hot-pink, red) <br />
+                        Then 2 of any check circles will be colored 'black' indicating your choices green and last red ; 1 of any check cirlces will be colored 'violet' indicating your choice first red ; any one check circle will be kept 'white' indicating your choice 'hot-pink'.</li><br />
+                <li>If you pick (red , red, red, red) ; any 1 of the four check circles will be 'violet' indicating the first red of yours. Remaining three check circles will be 'black' indicating your remaining three red choices. [caution : That doesn't mean there are four red colors in the computer's choice ,In that case you would have get all 'violet']</li>
+              </ul>
+
+
+            </ul>
           </div>
-          <button style={{ cursor: 'pointer', border: '2px solid yellow', outline: 'none', borderRadius: '5px', fontSize: '15px',color:'yellow', background: ' rgb(119, 70, 70)' }} onClick={() => setRuleModalIsOpen(false)}>Resume Playing</button>
+          <button style={{ cursor: 'pointer', border: '2px solid yellow', outline: 'none', borderRadius: '5px', fontSize: '15px', color: 'yellow', background: ' rgb(119, 70, 70)' }} onClick={() => setRuleModalIsOpen(false)}>Resume Playing</button>
         </Modal>
         {/* The Rule Link */}
         <div className="sticky-text" onClick={() => setRuleModalIsOpen(true)}>Hints Here!</div>
@@ -445,6 +487,41 @@ function Game() {
               <div className="circle-small"></div>
             </div>
           </div>
+
+          <div className="circle-wrapper hide">
+            <p className="turn-no">Turn - 11</p>
+            <div className="circles-to-color">
+              <div id="1" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <div id="2" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <div id="3" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <div id="4" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <button onClick={matchColor}>Check</button>
+            </div>
+            <div className="circles-to-check hide">
+              <div className="circle-small"></div>
+              <div className="circle-small"></div>
+              <div className="circle-small"></div>
+              <div className="circle-small"></div>
+            </div>
+          </div>
+
+          <div className="circle-wrapper hide">
+            <p className="turn-no">Turn - 12</p>
+            <div className="circles-to-color">
+              <div id="1" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <div id="2" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <div id="3" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <div id="4" onClick={handleBackground} style={{ background: 'rgb(255,255,255' }} className="circle"></div>
+              <button onClick={matchColor}>Check</button>
+            </div>
+            <div className="circles-to-check hide">
+              <div className="circle-small"></div>
+              <div className="circle-small"></div>
+              <div className="circle-small"></div>
+              <div className="circle-small"></div>
+            </div>
+          </div>
+
           {/* Extra to avoid error */}
           <div className="circle-wrapper hide">
             <div className="circles-to-color">
